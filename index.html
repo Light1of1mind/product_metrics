@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>CIAM Metrics Simulator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <h1>CIAM Metrics Simulator</h1>
+      <button id="recalc">Рассчитать</button>
+    </header>
+
+    <div class="grid">
+
+      <!-- INPUTS -->
+      <section class="panel">
+        <h2>Inputs</h2>
+
+        <h3>Регистрация</h3>
+        <input id="regAttempts" type="number" placeholder="Попытки регистрации">
+        <input id="newUsers" type="number" placeholder="Новые пользователи">
+        <input id="regFields" type="number" placeholder="Кол-во полей регистрации">
+
+        <h3>Вход</h3>
+        <input id="loginAttempts" type="number" placeholder="Попытки входа">
+        <input id="loginFields" type="number" placeholder="Кол-во полей входа">
+
+        <h3>Perf</h3>
+        <input id="responseTime" type="number" placeholder="Response Time ms">
+        <input id="uptime" type="number" placeholder="Uptime %">
+        <input id="errorRate" type="number" placeholder="Error Rate %">
+        <input id="otpDelivery" type="number" placeholder="OTP Delivery sec">
+
+        <h3>OTP Cost</h3>
+        <input id="smsCost" type="number" placeholder="SMS cost">
+        <input id="pushCost" type="number" placeholder="Push cost">
+        <input id="emailCost" type="number" placeholder="Email cost">
+        <input id="totpCost" type="number" placeholder="TOTP cost">
+
+<h3>Support</h3>
+
+<input id="supportCalls" type="number" placeholder="Support Calls">
+<input id="supportHours" type="number" placeholder="Hours per call">
+<input id="supportHourCost" type="number" placeholder="Cost per hour">
+      </section>
+
+      <!-- KPI -->
+      <section class="panel">
+        <h2>KPI</h2>
+
+        <div id="kpi"></div>
+
+        <h3>Registration Funnel</h3>
+        <div id="regFunnel"></div>
+
+        <h3>Login Funnel</h3>
+        <div id="loginFunnel"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="js/dictionaries.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
