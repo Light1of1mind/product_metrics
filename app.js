@@ -2,7 +2,6 @@ function readInputs() {
   return {
     // Регистрация
     regAttempts: +document.getElementById("regAttempts").value || 0,
-    newUsers: +document.getElementById("newUsers").value || 0,
     regFields: +document.getElementById("regFields").value || 3,
 
     // Вход

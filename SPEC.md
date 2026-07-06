@@ -104,8 +104,6 @@ ROI
 
 Registration Attempts
 
-New Users
-
 Registration Fields
 
 Registration Steps
