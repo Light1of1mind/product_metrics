@@ -20,6 +20,15 @@ function readInputs() {
     emailCost: +document.getElementById("emailCost").value || 0,
     totpCost: +document.getElementById("totpCost").value || 0,
 
+    // Доли типов OTP
+    smsShare: +document.getElementById("smsShare").value || 70,
+    pushShare: +document.getElementById("pushShare").value || 15,
+    emailShare: +document.getElementById("emailShare").value || 10,
+    totpShare: +document.getElementById("totpShare").value || 5,
+
+    // Мобильное приложение (биометрия)
+    appShare: +document.getElementById("appShare").value || 0,
+
     // Поддержка
     supportCalls: +document.getElementById("supportCalls").value || 0,
     supportHours: +document.getElementById("supportHours").value || 0,
@@ -42,6 +51,7 @@ function render(result) {
     <div class="kpi-card">Вероятность загрузки страницы: ${fmtPct(result.pPage)}</div>
     <div class="kpi-card">Успешность доставки OTP: ${fmtPct(result.pOtp)}</div>
     <div class="kpi-card">Стоимость OTP: ${fmtMoney(result.otpCost)}</div>
+    <div class="kpi-card">Экономия на OTP (mix + биометрия): ${fmtMoney(result.otpSavings)}</div>
     <div class="kpi-card">Стоимость поддержки: ${fmtMoney(result.supportCost)}</div>
     <div class="kpi-card">Общие затраты: ${fmtMoney(result.totalCost)}</div>
   `;
@@ -57,9 +67,11 @@ function render(result) {
   document.getElementById("loginFunnel").innerHTML = `
     Попытки: ${Math.round(result.loginAttempts)}<br>
     Открыли страницу: ${Math.round(result.loginPage)}<br>
-    Заполнили форму: ${Math.round(result.loginForm)}<br>
+    Вход по биометрии (без OTP): ${Math.round(result.loginBioUsers)}<br>
+    Стандартный вход — заполнили форму: ${Math.round(result.loginForm)}<br>
     Прошли OTP: ${Math.round(result.loginOtp)}<br>
-    Успешный вход: ${Math.round(result.loginSuccess)}
+    Успешно через биометрию: ${Math.round(result.loginBioSuccess)}<br>
+    Успешный вход (всего): ${Math.round(result.loginSuccess)}
   `;
 }
 

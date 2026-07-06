@@ -140,6 +140,17 @@ OTP Cost
 
 OTP Delay
 
+OTP Type Share, % (SMS/Push/Email/TOTP — реализовано)
+
+---
+
+## Биометрия / мобильное приложение
+
+Доля входов по биометрии, % (appShare — реализовано)
+
+Успех входа по биометрии = только стабильность соединения (pPage),
+отдельного параметра успешности не требуется
+
 ---
 
 ## Platform
@@ -466,6 +477,15 @@ engine.js — частично:
 - воронка регистрации и логина (Attempts → Page → Form → OTP → Success)
 - вероятностная модель (response time, uptime, error rate, fields, otp delivery)
 - стоимость OTP и стоимость поддержки, total cost
+- доли типов OTP (SMS/Push/Email/TOTP, %) настраиваемые, нормализуются к 100%
+  и влияют на среднюю стоимость OTP
+- доля входов по биометрии (appShare, %) — эти пользователи входят через
+  fingerprint/FaceID, минуя форму и OTP; успех входа зависит только от
+  стабильности соединения (pPage — response time, uptime, error rate),
+  отдельной вероятности биометрии нет
+- KPI "экономия на OTP" (otpSavings) — сравнение фактической стоимости OTP
+  с базовым сценарием (100% SMS, без биометрии), чтобы явно показать выгоду
+  от push/in-app OTP и биометрии
 - нет: Activation, Drop-off, Revenue, Profit, ROI, Fraud cost
 
 dictionaries.js — частично:

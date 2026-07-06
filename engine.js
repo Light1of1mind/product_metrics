@@ -31,25 +31,46 @@ function calculate(inputs) {
   const loginAttempts = inputs.loginAttempts;
 
   const loginPage = loginAttempts * pPage;
-  const loginForm = loginPage * pFieldsLogin;
+
+  // доля входов через биометрию (fingerprint/FaceID) не требует OTP вообще.
+  // Успех такого входа зависит только от стабильности соединения (уже учтено
+  // в pPage выше) — отдельной вероятности биометрии не требуется.
+  const bioShare = Math.min(inputs.appShare, 100) / 100;
+
+  const loginBioUsers = loginPage * bioShare;
+  const loginStdUsers = loginPage * (1 - bioShare);
+
+  const loginBioSuccess = loginBioUsers;
+
+  const loginForm = loginStdUsers * pFieldsLogin;
   const loginOtp = loginForm * pOtp;
-  const loginSuccess = loginOtp;
+
+  const loginSuccess = loginOtp + loginBioSuccess;
 
   // =========================
   // OTP COST MODEL
   // =========================
 
   const otpCountReg = regForm * 1.05; // retry factor
-  const otpCountLogin = loginForm * 1.03;
+  const otpCountLogin = loginForm * 1.03; // только стандартный вход, биометрия не шлёт OTP
+
+  const shareSum =
+    inputs.smsShare + inputs.pushShare + inputs.emailShare + inputs.totpShare || 1;
 
   const avgOtpCost =
-    inputs.smsCost * 0.7 +
-    inputs.pushCost * 0.15 +
-    inputs.emailCost * 0.1 +
-    inputs.totpCost * 0.05;
+    inputs.smsCost * (inputs.smsShare / shareSum) +
+    inputs.pushCost * (inputs.pushShare / shareSum) +
+    inputs.emailCost * (inputs.emailShare / shareSum) +
+    inputs.totpCost * (inputs.totpShare / shareSum);
 
   const otpCost =
     (otpCountReg + otpCountLogin) * avgOtpCost;
+
+  // Экономия по сравнению с базовым сценарием: 100% SMS и без биометрии
+  const loginFormBaseline = loginPage * pFieldsLogin;
+  const otpCountLoginBaseline = loginFormBaseline * 1.03;
+  const otpCostBaseline = (otpCountReg + otpCountLoginBaseline) * inputs.smsCost;
+  const otpSavings = otpCostBaseline - otpCost;
 
   // =========================
   // SUPPORT COST
@@ -74,6 +95,8 @@ function calculate(inputs) {
 
     loginAttempts,
     loginPage,
+    loginBioUsers,
+    loginBioSuccess,
     loginForm,
     loginOtp,
     loginSuccess,
@@ -84,6 +107,8 @@ function calculate(inputs) {
 
     // cost
     otpCost,
+    otpCostBaseline,
+    otpSavings,
     supportCost,
     totalCost: otpCost + supportCost,
 
