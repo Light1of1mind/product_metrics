@@ -1,8 +1,8 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #ecf0f1;
-  color: #2c3e50;
+  background: #e4edfa;
+  color: #464e5c;
 }
 
 .app {
@@ -13,9 +13,10 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #2c3e50;
+  background: #00205b;
   padding: 15px 20px;
   margin: -20px -20px 20px -20px;
+  border-bottom: 4px solid #f27722;
 }
 
 h1 {
@@ -27,7 +28,7 @@ h1 {
 button {
   padding: 10px 16px;
   cursor: pointer;
-  background: #2980b9;
+  background: #f27722;
   color: #fff;
   border: none;
   border-radius: 0;
@@ -35,7 +36,7 @@ button {
 }
 
 button:hover {
-  background: #3498db;
+  background: #d9660f;
 }
 
 .grid {
@@ -59,7 +60,7 @@ button:hover {
 label {
   display: block;
   font-size: 13px;
-  color: #7f8c8d;
+  color: #464e5c;
   margin-bottom: 4px;
 }
 
@@ -68,34 +69,34 @@ input {
   margin: 0;
   padding: 8px;
   border-radius: 0;
-  border: 1px solid #bdc3c7;
-  background: #ecf0f1;
-  color: #2c3e50;
+  border: 1px solid #dce6f5;
+  background: #e4edfa;
+  color: #464e5c;
   box-sizing: border-box;
 }
 
 input::placeholder {
-  color: #95a5a6;
+  color: #8b93a3;
 }
 
 input:focus {
   outline: none;
-  border-color: #2980b9;
+  border-color: #00205b;
   background: #ffffff;
 }
 
 h2, h3 {
   margin-top: 10px;
-  color: #2c3e50;
+  color: #00205b;
 }
 
 h2 {
-  border-bottom: 3px solid #2980b9;
+  border-bottom: 3px solid #f27722;
   padding-bottom: 8px;
 }
 
 .kpi-card {
-  background: #2980b9;
+  background: #0c347a;
   color: #ffffff;
   padding: 10px;
   margin: 5px 0;
@@ -104,9 +105,10 @@ h2 {
 }
 
 #regFunnel, #loginFunnel {
-  background: #ecf0f1;
+  background: #dce6f5;
   border: none;
   border-radius: 0;
   padding: 10px;
   line-height: 1.6;
+  color: #464e5c;
 }
