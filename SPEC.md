@@ -140,7 +140,9 @@ OTP Cost
 
 OTP Delay
 
-OTP Type Share, % (SMS/Push/Email/TOTP — реализовано)
+OTP Type Share, % (SMS/Push/Email/TOTP — реализовано, применяется только к
+логину; регистрация всегда шлёт и SMS, и Email одновременно, вне зависимости
+от долей)
 
 ---
 
@@ -478,7 +480,8 @@ engine.js — частично:
 - вероятностная модель (response time, uptime, error rate, fields, otp delivery)
 - стоимость OTP и стоимость поддержки, total cost
 - доли типов OTP (SMS/Push/Email/TOTP, %) настраиваемые, нормализуются к 100%
-  и влияют на среднюю стоимость OTP
+  и влияют на стоимость OTP при логине; на регистрацию доли не влияют — там
+  всегда считается стоимость SMS + Email одновременно (regOtpCost)
 - доля входов по биометрии (appShare, %) — эти пользователи входят через
   fingerprint/FaceID, минуя форму и OTP; успех входа зависит только от
   стабильности соединения (pPage — response time, uptime, error rate),
