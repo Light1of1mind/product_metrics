@@ -1,8 +1,8 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
-  background: #0f1115;
-  color: #fff;
+  background: #f4f5f7;
+  color: #1c1f26;
 }
 
 .app {
@@ -15,9 +15,22 @@ header {
   align-items: center;
 }
 
+h1 {
+  color: #14161a;
+}
+
 button {
   padding: 8px 14px;
   cursor: pointer;
+  background: #2f6fed;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #2559c7;
 }
 
 .grid {
@@ -27,9 +40,11 @@ button {
 }
 
 .panel {
-  background: #1a1d25;
+  background: #ffffff;
   padding: 15px;
   border-radius: 10px;
+  border: 1px solid #e2e4e9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .field {
@@ -39,7 +54,7 @@ button {
 label {
   display: block;
   font-size: 13px;
-  color: #a7adba;
+  color: #4b5160;
   margin-bottom: 4px;
 }
 
@@ -48,17 +63,40 @@ input {
   margin: 0;
   padding: 6px;
   border-radius: 6px;
-  border: none;
+  border: 1px solid #ccced4;
+  background: #fbfbfc;
+  color: #1c1f26;
   box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #9a9fa8;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2f6fed;
+  background: #ffffff;
 }
 
 h2, h3 {
   margin-top: 10px;
+  color: #14161a;
 }
 
 .kpi-card {
-  background: #222838;
+  background: #eef2fb;
+  color: #1c1f26;
   padding: 10px;
   margin: 5px 0;
   border-radius: 6px;
+  border: 1px solid #dbe3f5;
+}
+
+#regFunnel, #loginFunnel {
+  background: #fafbfc;
+  border: 1px solid #e2e4e9;
+  border-radius: 6px;
+  padding: 10px;
+  line-height: 1.6;
 }

@@ -33,7 +33,7 @@ function fmtPct(value) {
 }
 
 function fmtMoney(value) {
-  return Number.isFinite(value) ? value.toFixed(2) + " $" : "—";
+  return Number.isFinite(value) ? value.toFixed(2) + " ₽" : "—";
 }
 
 function render(result) {
