@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>CIAM Metrics Simulator</title>
+  <title>Симулятор продуктовых метрик CIAM</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -10,54 +10,101 @@
   <div class="app">
 
     <header>
-      <h1>CIAM Metrics Simulator</h1>
-      <button id="recalc">Рассчитать</button>
+      <h1>Симулятор продуктовых метрик CIAM</h1>
+      <button id="recalc">Пересчитать</button>
     </header>
 
     <div class="grid">
 
       <!-- INPUTS -->
       <section class="panel">
-        <h2>Inputs</h2>
+        <h2>Параметры</h2>
 
         <h3>Регистрация</h3>
-        <input id="regAttempts" type="number" placeholder="Попытки регистрации">
-        <input id="newUsers" type="number" placeholder="Новые пользователи">
-        <input id="regFields" type="number" placeholder="Кол-во полей регистрации">
+        <div class="field">
+          <label for="regAttempts">Попытки регистрации</label>
+          <input id="regAttempts" type="number" placeholder="например, 1000">
+        </div>
+        <div class="field">
+          <label for="newUsers">Новые пользователи</label>
+          <input id="newUsers" type="number" placeholder="например, 800">
+        </div>
+        <div class="field">
+          <label for="regFields">Количество полей в форме регистрации</label>
+          <input id="regFields" type="number" placeholder="например, 3">
+        </div>
 
         <h3>Вход</h3>
-        <input id="loginAttempts" type="number" placeholder="Попытки входа">
-        <input id="loginFields" type="number" placeholder="Кол-во полей входа">
+        <div class="field">
+          <label for="loginAttempts">Попытки входа</label>
+          <input id="loginAttempts" type="number" placeholder="например, 500">
+        </div>
+        <div class="field">
+          <label for="loginFields">Количество полей в форме входа</label>
+          <input id="loginFields" type="number" placeholder="например, 2">
+        </div>
 
-        <h3>Perf</h3>
-        <input id="responseTime" type="number" placeholder="Response Time ms">
-        <input id="uptime" type="number" placeholder="Uptime %">
-        <input id="errorRate" type="number" placeholder="Error Rate %">
-        <input id="otpDelivery" type="number" placeholder="OTP Delivery sec">
+        <h3>Платформа</h3>
+        <div class="field">
+          <label for="responseTime">Время отклика, мс</label>
+          <input id="responseTime" type="number" placeholder="например, 300">
+        </div>
+        <div class="field">
+          <label for="uptime">Доступность (Uptime), %</label>
+          <input id="uptime" type="number" placeholder="например, 99.5">
+        </div>
+        <div class="field">
+          <label for="errorRate">Доля ошибок (Error Rate), %</label>
+          <input id="errorRate" type="number" placeholder="например, 1">
+        </div>
+        <div class="field">
+          <label for="otpDelivery">Время доставки OTP, сек</label>
+          <input id="otpDelivery" type="number" placeholder="например, 10">
+        </div>
 
-        <h3>OTP Cost</h3>
-        <input id="smsCost" type="number" placeholder="SMS cost">
-        <input id="pushCost" type="number" placeholder="Push cost">
-        <input id="emailCost" type="number" placeholder="Email cost">
-        <input id="totpCost" type="number" placeholder="TOTP cost">
+        <h3>Стоимость OTP</h3>
+        <div class="field">
+          <label for="smsCost">Стоимость SMS, $</label>
+          <input id="smsCost" type="number" placeholder="например, 0.05">
+        </div>
+        <div class="field">
+          <label for="pushCost">Стоимость Push, $</label>
+          <input id="pushCost" type="number" placeholder="например, 0.01">
+        </div>
+        <div class="field">
+          <label for="emailCost">Стоимость Email, $</label>
+          <input id="emailCost" type="number" placeholder="например, 0.005">
+        </div>
+        <div class="field">
+          <label for="totpCost">Стоимость TOTP, $</label>
+          <input id="totpCost" type="number" placeholder="например, 0">
+        </div>
 
-<h3>Support</h3>
-
-<input id="supportCalls" type="number" placeholder="Support Calls">
-<input id="supportHours" type="number" placeholder="Hours per call">
-<input id="supportHourCost" type="number" placeholder="Cost per hour">
+        <h3>Поддержка</h3>
+        <div class="field">
+          <label for="supportCalls">Количество обращений в поддержку</label>
+          <input id="supportCalls" type="number" placeholder="например, 20">
+        </div>
+        <div class="field">
+          <label for="supportHours">Часов на одно обращение</label>
+          <input id="supportHours" type="number" placeholder="например, 0.25">
+        </div>
+        <div class="field">
+          <label for="supportHourCost">Стоимость часа поддержки, $</label>
+          <input id="supportHourCost" type="number" placeholder="например, 15">
+        </div>
       </section>
 
       <!-- KPI -->
       <section class="panel">
-        <h2>KPI</h2>
+        <h2>Показатели (KPI)</h2>
 
         <div id="kpi"></div>
 
-        <h3>Registration Funnel</h3>
+        <h3>Воронка регистрации</h3>
         <div id="regFunnel"></div>
 
-        <h3>Login Funnel</h3>
+        <h3>Воронка входа</h3>
         <div id="loginFunnel"></div>
       </section>
 
