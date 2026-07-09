@@ -25,22 +25,22 @@
 
         <h3>Регистрация</h3>
         <div class="field">
-          <label for="regAttempts">Попытки регистрации</label>
-          <input id="regAttempts" type="number" placeholder="например, 1000">
+          <label for="regAttempts">Запросы на регистрацию: <span class="value" id="regAttemptsValue">2000</span></label>
+          <input id="regAttempts" type="range" min="100" max="1000000" step="1" value="2000">
         </div>
         <div class="field">
-          <label for="regFields">Количество полей в форме регистрации</label>
-          <input id="regFields" type="number" placeholder="например, 3">
+          <label for="regFields">Количество полей в форме регистрации: <span class="value" id="regFieldsValue">3</span></label>
+          <input id="regFields" type="range" min="1" max="10" step="1" value="3">
         </div>
 
         <h3>Вход</h3>
         <div class="field">
-          <label for="loginAttempts">Попытки входа</label>
-          <input id="loginAttempts" type="number" placeholder="например, 500">
+          <label for="loginAttempts">Запросы логина: <span class="value" id="loginAttemptsValue">15000</span></label>
+          <input id="loginAttempts" type="range" min="100" max="10000000" step="1" value="15000">
         </div>
         <div class="field">
-          <label for="loginFields">Количество полей в форме входа</label>
-          <input id="loginFields" type="number" placeholder="например, 2">
+          <label for="loginFields">Количество полей в форме входа: <span class="value" id="loginFieldsValue">2</span></label>
+          <input id="loginFields" type="range" min="1" max="3" step="1" value="2">
         </div>
 
         <h3>Платформа</h3>
@@ -49,72 +49,72 @@
           <input id="responseTime" type="range" min="20" max="5000" step="10" value="300">
         </div>
         <div class="field">
-          <label for="uptime">Доступность (Uptime), %</label>
-          <input id="uptime" type="number" placeholder="например, 99.5">
+          <label for="uptime">Доступность (Uptime), %: <span class="value" id="uptimeValue">98</span></label>
+          <input id="uptime" type="range" min="0" max="100" step="1" value="98">
         </div>
         <div class="field">
-          <label for="errorRate">Доля ошибок (Error Rate), %</label>
-          <input id="errorRate" type="number" placeholder="например, 1">
+          <label for="errorRate">Доля ошибок (Error Rate), %: <span class="value" id="errorRateValue">5</span></label>
+          <input id="errorRate" type="range" min="0" max="100" step="1" value="5">
         </div>
         <div class="field">
-          <label for="otpDelivery">Время доставки OTP, сек</label>
-          <input id="otpDelivery" type="number" placeholder="например, 10">
+          <label for="otpDelivery">Время доставки OTP, сек: <span class="value" id="otpDeliveryValue">10</span></label>
+          <input id="otpDelivery" type="range" min="1" max="180" step="1" value="10">
         </div>
 
         <h3>Стоимость OTP</h3>
         <div class="field">
-          <label for="smsCost">Стоимость SMS, ₽</label>
-          <input id="smsCost" type="number" placeholder="например, 3">
+          <label for="smsCost">Стоимость SMS, ₽: <span class="value" id="smsCostValue">8</span></label>
+          <input id="smsCost" type="range" min="0" max="100" step="1" value="8">
         </div>
         <div class="field">
-          <label for="pushCost">Стоимость Push, ₽</label>
-          <input id="pushCost" type="number" placeholder="например, 0.5">
+          <label for="pushCost">Стоимость Push, ₽: <span class="value" id="pushCostValue">1</span></label>
+          <input id="pushCost" type="range" min="0" max="100" step="1" value="1">
         </div>
         <div class="field">
-          <label for="emailCost">Стоимость Email, ₽</label>
-          <input id="emailCost" type="number" placeholder="например, 0.3">
+          <label for="emailCost">Стоимость Email, ₽: <span class="value" id="emailCostValue">0</span></label>
+          <input id="emailCost" type="range" min="0" max="100" step="1" value="0">
         </div>
         <div class="field">
-          <label for="totpCost">Стоимость TOTP, ₽</label>
-          <input id="totpCost" type="number" placeholder="например, 0">
+          <label for="totpCost">Стоимость TOTP, ₽: <span class="value" id="totpCostValue">0</span></label>
+          <input id="totpCost" type="range" min="0" max="100" step="1" value="0">
         </div>
 
         <h3>Доли типов OTP</h3>
         <div class="field">
-          <label for="smsShare">Доля SMS, %</label>
-          <input id="smsShare" type="number" placeholder="например, 70">
+          <label for="smsShare">Доля SMS, %: <span class="value" id="smsShareValue">80</span></label>
+          <input id="smsShare" type="range" min="0" max="100" step="1" value="80">
         </div>
         <div class="field">
-          <label for="pushShare">Доля Push, %</label>
-          <input id="pushShare" type="number" placeholder="например, 15">
+          <label for="pushShare">Доля Push, %: <span class="value" id="pushShareValue">10</span></label>
+          <input id="pushShare" type="range" min="0" max="100" step="1" value="10">
         </div>
         <div class="field">
-          <label for="emailShare">Доля Email, %</label>
-          <input id="emailShare" type="number" placeholder="например, 10">
+          <label for="emailShare">Доля Email, %: <span class="value" id="emailShareValue">10</span></label>
+          <input id="emailShare" type="range" min="0" max="100" step="1" value="10">
         </div>
         <div class="field">
-          <label for="totpShare">Доля TOTP, %</label>
-          <input id="totpShare" type="number" placeholder="например, 5">
+          <label for="totpShare">Доля TOTP, %: <span class="value" id="totpShareValue">0</span></label>
+          <input id="totpShare" type="range" min="0" max="100" step="1" value="0">
         </div>
 
         <h3>Мобильное приложение (биометрия)</h3>
         <div class="field">
-          <label for="appShare">Доля входов по биометрии (без OTP), %</label>
-          <input id="appShare" type="number" placeholder="например, 40">
+          <label for="appShare">Доля входов по биометрии (без OTP), %: <span class="value" id="appShareValue">80</span></label>
+          <input id="appShare" type="range" min="0" max="100" step="1" value="80">
         </div>
 
         <h3>Поддержка</h3>
         <div class="field">
-          <label for="supportCalls">Количество обращений в поддержку</label>
-          <input id="supportCalls" type="number" placeholder="например, 20">
+          <label for="supportCalls">Количество обращений в поддержку: <span class="value" id="supportCallsValue">2000</span></label>
+          <input id="supportCalls" type="range" min="0" max="1000000" step="1" value="2000">
         </div>
         <div class="field">
-          <label for="supportHours">Часов на одно обращение</label>
-          <input id="supportHours" type="number" placeholder="например, 0.25">
+          <label for="supportHours">Часов на одно обращение: <span class="value" id="supportHoursValue">0.3</span></label>
+          <input id="supportHours" type="range" min="0" max="2" step="0.1" value="0.3">
         </div>
         <div class="field">
-          <label for="supportHourCost">Стоимость часа поддержки, ₽</label>
-          <input id="supportHourCost" type="number" placeholder="например, 800">
+          <label for="supportHourCost">Стоимость часа поддержки, ₽: <span class="value" id="supportHourCostValue">1500</span></label>
+          <input id="supportHourCost" type="range" min="0" max="10000" step="1" value="1500">
         </div>
       </section>
 

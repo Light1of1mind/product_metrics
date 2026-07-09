@@ -1,38 +1,38 @@
 function readInputs() {
   return {
     // Регистрация
-    regAttempts: +document.getElementById("regAttempts").value || 0,
+    regAttempts: +document.getElementById("regAttempts").value || 2000,
     regFields: +document.getElementById("regFields").value || 3,
 
     // Вход
-    loginAttempts: +document.getElementById("loginAttempts").value || 0,
-    loginFields: +document.getElementById("loginFields").value || 3,
+    loginAttempts: +document.getElementById("loginAttempts").value || 15000,
+    loginFields: +document.getElementById("loginFields").value || 2,
 
     // Платформа
     responseTime: +document.getElementById("responseTime").value || 300,
-    uptime: +document.getElementById("uptime").value || 99,
-    errorRate: +document.getElementById("errorRate").value || 1,
+    uptime: +document.getElementById("uptime").value || 98,
+    errorRate: +document.getElementById("errorRate").value || 5,
     otpDelivery: +document.getElementById("otpDelivery").value || 10,
 
     // Стоимость OTP
-    smsCost: +document.getElementById("smsCost").value || 0,
-    pushCost: +document.getElementById("pushCost").value || 0,
+    smsCost: +document.getElementById("smsCost").value || 8,
+    pushCost: +document.getElementById("pushCost").value || 1,
     emailCost: +document.getElementById("emailCost").value || 0,
     totpCost: +document.getElementById("totpCost").value || 0,
 
     // Доли типов OTP
-    smsShare: +document.getElementById("smsShare").value || 70,
-    pushShare: +document.getElementById("pushShare").value || 15,
+    smsShare: +document.getElementById("smsShare").value || 80,
+    pushShare: +document.getElementById("pushShare").value || 10,
     emailShare: +document.getElementById("emailShare").value || 10,
-    totpShare: +document.getElementById("totpShare").value || 5,
+    totpShare: +document.getElementById("totpShare").value || 0,
 
     // Мобильное приложение (биометрия)
-    appShare: +document.getElementById("appShare").value || 0,
+    appShare: +document.getElementById("appShare").value || 80,
 
     // Поддержка
-    supportCalls: +document.getElementById("supportCalls").value || 0,
-    supportHours: +document.getElementById("supportHours").value || 0,
-    supportHourCost: +document.getElementById("supportHourCost").value || 0,
+    supportCalls: +document.getElementById("supportCalls").value || 2000,
+    supportHours: +document.getElementById("supportHours").value || 0.3,
+    supportHourCost: +document.getElementById("supportHourCost").value || 1500,
   };
 }
 
@@ -134,12 +134,20 @@ function recalc() {
 
 document.getElementById("recalc").onclick = recalc;
 
-const responseTimeInput = document.getElementById("responseTime");
-const responseTimeValue = document.getElementById("responseTimeValue");
-responseTimeInput.addEventListener("input", () => {
-  responseTimeValue.textContent = responseTimeInput.value;
-  recalc();
-});
+// каждое поле-ползунок FIELD_IDS имеет парный <span id="{id}Value"> для
+// отображения текущего значения — обновляем его и пересчитываем на лету
+function wireSliders() {
+  FIELD_IDS.forEach((id) => {
+    const input = document.getElementById(id);
+    const valueEl = document.getElementById(id + "Value");
+    if (!input || !valueEl) return;
+    valueEl.textContent = input.value;
+    input.addEventListener("input", () => {
+      valueEl.textContent = input.value;
+      recalc();
+    });
+  });
+}
 
 document.getElementById("shareLink").onclick = async (event) => {
   saveState();
@@ -153,5 +161,5 @@ document.getElementById("shareLink").onclick = async (event) => {
 // восстанавливаем сохранённые или переданные в ссылке значения, затем
 // сразу считаем, чтобы UI не был пустым
 loadState();
-responseTimeValue.textContent = responseTimeInput.value;
+wireSliders();
 recalc();
