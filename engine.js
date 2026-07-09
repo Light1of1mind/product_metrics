@@ -79,11 +79,25 @@ function calculate(inputs) {
   const otpSavings = otpCostBaseline - otpCost;
 
   // =========================
-  // SUPPORT COST
+  // SUPPORT CALLS + COST
   // =========================
 
+  // Обращения в поддержку складываются из двух источников:
+  // 1) базовая доля от всех запросов авторизации (не связанные с ошибками
+  //    причины — забыл пароль, общая путаница и т.п.)
+  // 2) пользователи, столкнувшиеся с ошибкой платформы — их количество уже
+  //    полностью определяется errorRate и объёмом запросов, отдельный
+  //    коэффициент эскалации не нужен: каждый такой пользователь даёт одно
+  //    обращение
+  const totalAuthRequests = regAttempts + loginAttempts;
+  const errorAffectedUsers = totalAuthRequests * (inputs.errorRate / 100);
+
+  const supportCalls =
+    totalAuthRequests * (inputs.baseSupportRate / 100) +
+    errorAffectedUsers;
+
   const supportCost =
-    inputs.supportCalls *
+    supportCalls *
     inputs.supportHours *
     inputs.supportHourCost;
 
@@ -117,6 +131,7 @@ function calculate(inputs) {
     otpCost,
     otpCostBaseline,
     otpSavings,
+    supportCalls,
     supportCost,
     totalCost: otpCost + supportCost,
 

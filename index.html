@@ -79,7 +79,7 @@
           <input id="totpCost" type="range" min="0" max="100" step="1" value="0">
         </div>
 
-        <h3>Доли типов OTP</h3>
+        <h3>Доли типов OTP (в сумме 100%)</h3>
         <div class="field">
           <label for="smsShare">Доля SMS, %: <span class="value" id="smsShareValue">80</span></label>
           <input id="smsShare" type="range" min="0" max="100" step="1" value="80">
@@ -105,8 +105,8 @@
 
         <h3>Поддержка</h3>
         <div class="field">
-          <label for="supportCalls">Количество обращений в поддержку: <span class="value" id="supportCallsValue">2000</span></label>
-          <input id="supportCalls" type="range" min="0" max="1000000" step="1" value="2000">
+          <label for="baseSupportRate">Базовая доля обращений в поддержку, %: <span class="value" id="baseSupportRateValue">1</span></label>
+          <input id="baseSupportRate" type="range" min="0" max="20" step="0.1" value="1">
         </div>
         <div class="field">
           <label for="supportHours">Часов на одно обращение: <span class="value" id="supportHoursValue">0.3</span></label>

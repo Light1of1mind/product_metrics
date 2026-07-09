@@ -30,7 +30,7 @@ function readInputs() {
     appShare: +document.getElementById("appShare").value || 80,
 
     // Поддержка
-    supportCalls: +document.getElementById("supportCalls").value || 2000,
+    baseSupportRate: +document.getElementById("baseSupportRate").value || 1,
     supportHours: +document.getElementById("supportHours").value || 0.3,
     supportHourCost: +document.getElementById("supportHourCost").value || 1500,
   };
@@ -52,6 +52,7 @@ function render(result) {
     <div class="kpi-card">Успешность доставки OTP: ${fmtPct(result.pOtp)}</div>
     <div class="kpi-card">Стоимость OTP: ${fmtMoney(result.otpCost)}</div>
     <div class="kpi-card">Экономия на OTP (mix + биометрия): ${fmtMoney(result.otpSavings)}</div>
+    <div class="kpi-card">Обращения в поддержку: ${Math.round(result.supportCalls)}</div>
     <div class="kpi-card">Стоимость поддержки: ${fmtMoney(result.supportCost)}</div>
     <div class="kpi-card">Общие затраты: ${fmtMoney(result.totalCost)}</div>
   `;
@@ -82,7 +83,7 @@ const FIELD_IDS = [
   "smsCost", "pushCost", "emailCost", "totpCost",
   "smsShare", "pushShare", "emailShare", "totpShare",
   "appShare",
-  "supportCalls", "supportHours", "supportHourCost",
+  "baseSupportRate", "supportHours", "supportHourCost",
 ];
 
 const STORAGE_KEY = "ciamSimulatorInputs";
@@ -134,6 +135,42 @@ function recalc() {
 
 document.getElementById("recalc").onclick = recalc;
 
+// Доли типов OTP взаимозависимы и должны в сумме давать 100%: при изменении
+// одного слайдера остальные три пропорционально сжимаются/растягиваются,
+// чтобы забрать оставшийся бюджет.
+const OTP_SHARE_IDS = ["smsShare", "pushShare", "emailShare", "totpShare"];
+
+function rebalanceOtpShares(changedId) {
+  const changedInput = document.getElementById(changedId);
+  const changedValue = Math.min(100, Math.max(0, +changedInput.value));
+  changedInput.value = changedValue;
+
+  const others = OTP_SHARE_IDS.filter((id) => id !== changedId);
+  const remaining = 100 - changedValue;
+  const otherValues = others.map((id) => +document.getElementById(id).value);
+  const otherSum = otherValues.reduce((a, b) => a + b, 0);
+
+  const raw = otherSum > 0
+    ? otherValues.map((v) => (v / otherSum) * remaining)
+    : others.map(() => remaining / others.length);
+
+  // округляем до целых, остаток от округления отдаём последнему полю,
+  // чтобы сумма всех четырёх долей была ровно 100
+  const rounded = raw.map((v) => Math.round(v));
+  const roundedSum = rounded.reduce((a, b) => a + b, 0);
+  rounded[rounded.length - 1] += remaining - roundedSum;
+
+  others.forEach((id, i) => {
+    const value = Math.max(0, rounded[i]);
+    document.getElementById(id).value = value;
+    const valueEl = document.getElementById(id + "Value");
+    if (valueEl) valueEl.textContent = value;
+  });
+
+  const changedValueEl = document.getElementById(changedId + "Value");
+  if (changedValueEl) changedValueEl.textContent = changedValue;
+}
+
 // каждое поле-ползунок FIELD_IDS имеет парный <span id="{id}Value"> для
 // отображения текущего значения — обновляем его и пересчитываем на лету
 function wireSliders() {
@@ -143,7 +180,11 @@ function wireSliders() {
     if (!input || !valueEl) return;
     valueEl.textContent = input.value;
     input.addEventListener("input", () => {
-      valueEl.textContent = input.value;
+      if (OTP_SHARE_IDS.includes(id)) {
+        rebalanceOtpShares(id);
+      } else {
+        valueEl.textContent = input.value;
+      }
       recalc();
     });
   });
