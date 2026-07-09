@@ -75,13 +75,83 @@ function render(result) {
   `;
 }
 
+const FIELD_IDS = [
+  "regAttempts", "regFields",
+  "loginAttempts", "loginFields",
+  "responseTime", "uptime", "errorRate", "otpDelivery",
+  "smsCost", "pushCost", "emailCost", "totpCost",
+  "smsShare", "pushShare", "emailShare", "totpShare",
+  "appShare",
+  "supportCalls", "supportHours", "supportHourCost",
+];
+
+const STORAGE_KEY = "ciamSimulatorInputs";
+
+// Ссылка с параметрами в URL имеет приоритет над сохранённым состоянием —
+// так шаренная ссылка всегда открывается с переданными в ней значениями.
+function loadState() {
+  const params = new URLSearchParams(location.search);
+  const hasParams = FIELD_IDS.some((id) => params.has(id));
+
+  let values = {};
+  if (hasParams) {
+    FIELD_IDS.forEach((id) => {
+      if (params.has(id)) values[id] = params.get(id);
+    });
+  } else {
+    try {
+      values = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      values = {};
+    }
+  }
+
+  FIELD_IDS.forEach((id) => {
+    if (values[id] !== undefined) {
+      document.getElementById(id).value = values[id];
+    }
+  });
+}
+
+function saveState() {
+  const values = {};
+  const params = new URLSearchParams();
+  FIELD_IDS.forEach((id) => {
+    const value = document.getElementById(id).value;
+    values[id] = value;
+    if (value !== "") params.set(id, value);
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+  history.replaceState(null, "", `${location.pathname}?${params.toString()}`);
+}
+
 function recalc() {
   const inputs = readInputs();
   const result = calculate(inputs);
   render(result);
+  saveState();
 }
 
 document.getElementById("recalc").onclick = recalc;
 
-// первый расчёт сразу при загрузке страницы, чтобы UI не был пустым
+const responseTimeInput = document.getElementById("responseTime");
+const responseTimeValue = document.getElementById("responseTimeValue");
+responseTimeInput.addEventListener("input", () => {
+  responseTimeValue.textContent = responseTimeInput.value;
+  recalc();
+});
+
+document.getElementById("shareLink").onclick = async (event) => {
+  saveState();
+  await navigator.clipboard.writeText(location.href);
+  const button = event.target;
+  const originalText = button.textContent;
+  button.textContent = "Скопировано!";
+  setTimeout(() => { button.textContent = originalText; }, 1500);
+};
+
+// восстанавливаем сохранённые или переданные в ссылке значения, затем
+// сразу считаем, чтобы UI не был пустым
+loadState();
+responseTimeValue.textContent = responseTimeInput.value;
 recalc();

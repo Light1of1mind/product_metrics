@@ -11,7 +11,10 @@
 
     <header>
       <h1>Симулятор продуктовых метрик CIAM</h1>
-      <button id="recalc">Пересчитать</button>
+      <div class="header-actions">
+        <button id="shareLink">Скопировать ссылку</button>
+        <button id="recalc">Пересчитать</button>
+      </div>
     </header>
 
     <div class="grid">
@@ -42,8 +45,8 @@
 
         <h3>Платформа</h3>
         <div class="field">
-          <label for="responseTime">Время отклика, мс</label>
-          <input id="responseTime" type="number" placeholder="например, 300">
+          <label for="responseTime">Время отклика, мс: <span class="value" id="responseTimeValue">300</span></label>
+          <input id="responseTime" type="range" min="20" max="5000" step="10" value="300">
         </div>
         <div class="field">
           <label for="uptime">Доступность (Uptime), %</label>
