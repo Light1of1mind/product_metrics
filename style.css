@@ -52,6 +52,16 @@ button:hover {
   background: #0a2a63;
 }
 
+#period {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 0;
+  background: #ffffff;
+  color: #00205b;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

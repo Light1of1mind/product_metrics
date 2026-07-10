@@ -12,6 +12,11 @@
     <header>
       <h1>Симулятор продуктовых метрик CIAM</h1>
       <div class="header-actions">
+        <select id="period">
+          <option value="1" selected>День</option>
+          <option value="30">Месяц</option>
+          <option value="365">Год</option>
+        </select>
         <button id="shareLink">Скопировать ссылку</button>
         <button id="recalc">Пересчитать</button>
       </div>
@@ -115,6 +120,12 @@
         <div class="field">
           <label for="supportHourCost">Стоимость часа поддержки, ₽: <span class="value" id="supportHourCostValue">1500</span></label>
           <input id="supportHourCost" type="range" min="0" max="10000" step="1" value="1500">
+        </div>
+
+        <h3>Доход</h3>
+        <div class="field">
+          <label for="revenuePerUser">Доход компании с каждого авторизованного, ₽: <span class="value" id="revenuePerUserValue">100</span></label>
+          <input id="revenuePerUser" type="range" min="0" max="5000" step="1" value="100">
         </div>
       </section>
 

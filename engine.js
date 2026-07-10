@@ -13,11 +13,16 @@ function calculate(inputs) {
   // -------- OTP PROB --------
   const pOtp = getProb("otpDelivery", inputs.otpDelivery);
 
+  // -------- PERIOD --------
+  // Запросы вводятся как объём за день; выбранный период (день/месяц/год)
+  // масштабирует объём, и вместе с ним — весь funnel, стоимость и доход.
+  const periodMultiplier = inputs.periodMultiplier || 1;
+
   // =========================
   // REGISTRATION FUNNEL
   // =========================
 
-  const regAttempts = inputs.regAttempts;
+  const regAttempts = inputs.regAttempts * periodMultiplier;
 
   const regPage = regAttempts * pPage;
   const regForm = regPage * pFieldsReg;
@@ -28,7 +33,7 @@ function calculate(inputs) {
   // LOGIN FUNNEL
   // =========================
 
-  const loginAttempts = inputs.loginAttempts;
+  const loginAttempts = inputs.loginAttempts * periodMultiplier;
 
   const loginPage = loginAttempts * pPage;
 
@@ -102,6 +107,14 @@ function calculate(inputs) {
     inputs.supportHourCost;
 
   // =========================
+  // REVENUE
+  // =========================
+
+  // Доход считается с каждой новой (успешной) регистрации, не с логина —
+  // логин не создаёт нового авторизованного пользователя.
+  const revenueTotal = regSuccess * inputs.revenuePerUser;
+
+  // =========================
   // KPI
   // =========================
 
@@ -134,6 +147,10 @@ function calculate(inputs) {
     supportCalls,
     supportCost,
     totalCost: otpCost + supportCost,
+    revenueTotal,
+
+    // period
+    periodMultiplier,
 
     // probabilities
     pPage,

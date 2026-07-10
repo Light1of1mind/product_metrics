@@ -1,5 +1,8 @@
 function readInputs() {
   return {
+    // Период
+    periodMultiplier: +document.getElementById("period").value || 1,
+
     // Регистрация
     regAttempts: +document.getElementById("regAttempts").value || 2000,
     regFields: +document.getElementById("regFields").value || 3,
@@ -33,6 +36,9 @@ function readInputs() {
     baseSupportRate: +document.getElementById("baseSupportRate").value || 1,
     supportHours: +document.getElementById("supportHours").value || 0.3,
     supportHourCost: +document.getElementById("supportHourCost").value || 1500,
+
+    // Доход
+    revenuePerUser: +document.getElementById("revenuePerUser").value || 100,
   };
 }
 
@@ -55,6 +61,7 @@ function render(result) {
     <div class="kpi-card">Обращения в поддержку: ${Math.round(result.supportCalls)}</div>
     <div class="kpi-card">Стоимость поддержки: ${fmtMoney(result.supportCost)}</div>
     <div class="kpi-card">Общие затраты: ${fmtMoney(result.totalCost)}</div>
+    <div class="kpi-card">Доход итого: ${fmtMoney(result.revenueTotal)}</div>
   `;
 
   document.getElementById("regFunnel").innerHTML = `
@@ -77,6 +84,7 @@ function render(result) {
 }
 
 const FIELD_IDS = [
+  "period",
   "regAttempts", "regFields",
   "loginAttempts", "loginFields",
   "responseTime", "uptime", "errorRate", "otpDelivery",
@@ -84,6 +92,7 @@ const FIELD_IDS = [
   "smsShare", "pushShare", "emailShare", "totpShare",
   "appShare",
   "baseSupportRate", "supportHours", "supportHourCost",
+  "revenuePerUser",
 ];
 
 const STORAGE_KEY = "ciamSimulatorInputs";
@@ -171,18 +180,20 @@ function rebalanceOtpShares(changedId) {
   if (changedValueEl) changedValueEl.textContent = changedValue;
 }
 
-// каждое поле-ползунок FIELD_IDS имеет парный <span id="{id}Value"> для
-// отображения текущего значения — обновляем его и пересчитываем на лету
+// большинство полей FIELD_IDS — слайдеры с парным <span id="{id}Value">
+// для отображения текущего значения (кроме "period" — это <select>, у
+// него значение показывает сам комбобокс). В обоих случаях пересчитываем
+// на лету при изменении.
 function wireSliders() {
   FIELD_IDS.forEach((id) => {
     const input = document.getElementById(id);
+    if (!input) return;
     const valueEl = document.getElementById(id + "Value");
-    if (!input || !valueEl) return;
-    valueEl.textContent = input.value;
+    if (valueEl) valueEl.textContent = input.value;
     input.addEventListener("input", () => {
       if (OTP_SHARE_IDS.includes(id)) {
         rebalanceOtpShares(id);
-      } else {
+      } else if (valueEl) {
         valueEl.textContent = input.value;
       }
       recalc();
